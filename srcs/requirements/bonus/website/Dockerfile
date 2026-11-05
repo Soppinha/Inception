@@ -1,7 +1,9 @@
 FROM debian:12
 
-RUN apt-get update && apt-get install --no-install-recommends -y busybox \
+RUN apt-get update && apt-get install --no-install-recommends -y lighttpd \
     && rm -rf /var/lib/apt/lists/*
+
+COPY conf/lighttpd.conf /etc/lighttpd/lighttpd.conf
 
 COPY site/ /var/www/website/
 

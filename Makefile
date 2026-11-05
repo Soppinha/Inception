@@ -31,9 +31,10 @@ clean:
 
 fclean:
 	$(COMPOSE) down --rmi all --volumes
-	if [ -d $(DATA_DIR) ]; then \
+	@if [ -d $(DATA_DIR) ]; then \
 		docker run --rm -v $(DATA_DIR):/data debian:12 sh -c 'rm -rf /data/*'; \
 		rmdir $(DATA_DIR); \
+		echo "$(DATA_DIR) removido"; \
 	fi
 
 re: fclean all

@@ -54,7 +54,7 @@ The stack serves a WordPress website over HTTPS. Every service runs in its own c
         └── bonus/
             ├── redis/        Dockerfile, conf/redis.conf, tools/init.sh
             ├── adminer/      Dockerfile, conf/www.conf, tools/init.sh
-            └── website/      Dockerfile, site/ (index.html, style.css), tools/init.sh
+            └── website/      Dockerfile, conf/lighttpd.conf, site/ (index.html, style.css), tools/init.sh
 ```
 
 Each `tools/init.sh` is the container's entrypoint. It validates its environment, performs first-run setup when the volume is empty, and then replaces itself with the service process via `exec`. The service therefore runs as PID 1 in the foreground and receives the `SIGTERM` sent by `docker stop`.

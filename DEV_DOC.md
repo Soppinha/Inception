@@ -96,7 +96,7 @@ Compose builds one image per service, each named after its service (`mariadb:inc
 | nginx | — | generates a self-signed certificate; renders the conf template with `envsubst`; `nginx -t` | `nginx -g "daemon off;"` |
 | redis | — | — | `redis-server` (as user `redis`) |
 | adminer | — | — | `php-fpm8.2 -F` |
-| website | — | — | `busybox httpd -f` |
+| website | — | checks the conf with `lighttpd -tt` | `lighttpd -D` |
 
 ## 3. Manage containers and volumes
 
