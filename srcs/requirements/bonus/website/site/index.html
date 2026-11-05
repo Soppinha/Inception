@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inception</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <p class="eyebrow">42 &middot; System Administration</p>
+        <h1>Inception</h1>
+        <p class="lead">A small infrastructure of Docker containers, each one built from Debian, wired together by Docker Compose and reached through a single TLS entrypoint.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Services</h2>
+            <ul class="grid">
+                <li><a href="/"><strong>WordPress</strong><span>Website served by php-fpm</span></a></li>
+                <li><a href="/wp-admin/"><strong>WordPress admin</strong><span>Administration panel</span></a></li>
+                <li><a href="/adminer/"><strong>Adminer</strong><span>Database management for MariaDB</span></a></li>
+                <li><div><strong>Redis</strong><span>Object cache for WordPress</span></div></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>How a request travels</h2>
+            <ol class="flow">
+                <li>The browser opens <code>https://</code> on port 443.</li>
+                <li>NGINX terminates TLS (v1.2 / v1.3 only).</li>
+                <li>PHP pages go to php-fpm over FastCGI; this page comes from its own container.</li>
+                <li>WordPress reads MariaDB and caches objects in Redis.</li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <p>Static page &middot; HTML and CSS only &middot; served by BusyBox httpd</p>
+    </footer>
+</body>
+</html>

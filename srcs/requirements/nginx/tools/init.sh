@@ -8,6 +8,8 @@ set -e
 : "${WP_PORT:?}"
 : "${CERT_DAYS:?}"
 : "${CERT_SUBJECT:?}"
+: "${ADMINER_HOST:?}" "${ADMINER_PORT:?}"
+: "${WEBSITE_HOST:?}" "${WEBSITE_PORT:?}"
 
 CRT=/etc/nginx/ssl/inception.crt
 KEY=/etc/nginx/ssl/inception.key
@@ -22,7 +24,8 @@ if [ ! -f "$CRT" ] || [ ! -f "$KEY" ]; then
     chmod 600 "$KEY"
 fi
 
-envsubst '${DOMAIN_NAME} ${NGINX_PORT} ${WP_HOST} ${WP_PORT}' \
+envsubst '${DOMAIN_NAME} ${NGINX_PORT} ${WP_HOST} ${WP_PORT}
+          ${ADMINER_HOST} ${ADMINER_PORT} ${WEBSITE_HOST} ${WEBSITE_PORT}' \
     < /etc/nginx/templates/inception.conf.template \
     > /etc/nginx/conf.d/inception.conf
 

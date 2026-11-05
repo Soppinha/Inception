@@ -8,6 +8,7 @@ set -e
 : "${WP_TITLE:?}" "${WP_ADMIN_USER:?}" "${WP_ADMIN_EMAIL:?}"
 : "${WP_USER:?}" "${WP_USER_EMAIL:?}" "${WP_USER_ROLE:?}"
 : "${WP_PORT:?}" "${WP_VERSION:?}"
+: "${REDIS_HOST:?}" "${REDIS_PORT:?}" "${REDIS_CACHE_VERSION:?}"
 
 DB_PASS="$(cat /run/secrets/db_password)"
 
@@ -51,6 +52,15 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
     echo "[wordpress] Instalacao concluida."
 fi
+
+$WP config set WP_REDIS_HOST "$REDIS_HOST"
+$WP config set WP_REDIS_PORT "$REDIS_PORT" --raw
+if ! $WP plugin is-installed redis-cache; then
+    echo "[wordpress] Instalando o plugin Redis Object Cache..."
+    $WP plugin install redis-cache --version="$REDIS_CACHE_VERSION"
+fi
+$WP plugin is-active redis-cache || $WP plugin activate redis-cache
+[ -f /var/www/html/wp-content/object-cache.php ] || $WP redis enable
 
 chown -R www-data:www-data /var/www/html
 

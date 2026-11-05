@@ -20,4 +20,14 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_pass ${WP_HOST}:${WP_PORT};
     }
+
+    location ^~ /adminer/ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /var/www/adminer/index.php;
+        fastcgi_pass ${ADMINER_HOST}:${ADMINER_PORT};
+    }
+
+    location ^~ /site/ {
+        proxy_pass http://${WEBSITE_HOST}:${WEBSITE_PORT}/;
+    }
 }
